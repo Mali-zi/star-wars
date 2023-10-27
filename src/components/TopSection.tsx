@@ -12,7 +12,6 @@ export default class TopSection extends Component<Props, ITopSectionState> {
     this.state = {
       value: '',
       searchQuery: '',
-      searchError: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -23,16 +22,15 @@ export default class TopSection extends Component<Props, ITopSectionState> {
     this.setState({ value: e.target.value });
   }
 
-  componentDidMount() {}
-  componentWillUnmount() {}
-
   handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    localStorage.setItem('search', JSON.stringify(this.state.value));
     this.setState((prevState) => ({
       ...prevState,
       value: '',
       searchQuery: this.state.value,
     }));
+    console.log('searchQuery', this.state.searchQuery);
   };
 
   render() {

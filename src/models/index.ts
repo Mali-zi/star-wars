@@ -22,6 +22,7 @@ export interface IPlanet {
 }
 
 export interface IBottomSectionState {
+  searchQuery: string;
   planets: IPlanet[] | null;
   isLoading: boolean;
   error: null | Error;
@@ -34,5 +35,4 @@ export interface IPlanetListProps {
 export interface ITopSectionState {
   value: string;
   searchQuery: string;
-  searchError: string;
 }

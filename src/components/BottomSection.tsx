@@ -11,6 +11,7 @@ export default class BottomSection extends Component<
   constructor(props: IBottomSectionProps) {
     super(props);
     this.state = {
+      searchQuery: '',
       planets: null,
       isLoading: false,
       error: null,
@@ -44,7 +45,15 @@ export default class BottomSection extends Component<
   };
 
   componentDidMount() {
-    this.fetchData(BASE_URL);
+    const prevSearch = localStorage.getItem('search');
+    if (prevSearch) {
+      this.setState({ searchQuery: JSON.parse(prevSearch) });
+      console.log('prevSearch', JSON.parse(prevSearch));
+      const url = BASE_URL + '?search=' + JSON.parse(prevSearch);
+      this.fetchData(url);
+    } else {
+      this.fetchData(BASE_URL);
+    }
   }
 
   componentDidUpdate(prevProps: IBottomSectionProps) {
@@ -78,12 +87,5 @@ export default class BottomSection extends Component<
     } else {
       return <h2> Nothing found! </h2>;
     }
-
-    // return (
-    //   <div>
-    //     Hello
-    //     <PlanetList planets={planets} />
-    //   </div>
-    // );
   }
 }
