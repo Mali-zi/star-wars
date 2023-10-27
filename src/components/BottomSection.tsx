@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 
 interface IBottomSectionProps {
   searchQuery: string;
-  searchResponse: [];
 }
 
-const BASE_URL = 'https://swapi.dev/api/vehicles/?search=';
+const BASE_URL = 'https://swapi.dev/api/vehicles/';
 
 export default class BottomSection extends Component<IBottomSectionProps> {
   constructor(props: IBottomSectionProps) {
@@ -13,7 +12,11 @@ export default class BottomSection extends Component<IBottomSectionProps> {
   }
 
   fetchData = async (searchQuery: string) => {
-    const url = BASE_URL + searchQuery;
+    let url = BASE_URL;
+
+    if (searchQuery) {
+      url = BASE_URL + '?search=' + searchQuery;
+    }
     await fetch(url)
       .then((resp) => {
         if (!resp.ok) {
@@ -42,6 +45,7 @@ export default class BottomSection extends Component<IBottomSectionProps> {
       this.fetchData(this.props.searchQuery);
     }
   }
+
   render() {
     const list = result.map((item, index) => {
       return <li key={index}>item</li>;
