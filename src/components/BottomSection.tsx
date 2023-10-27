@@ -1,56 +1,89 @@
 import React, { Component } from 'react';
+import PlanetList from './PlanetList';
+import { IBottomSectionState, IBottomSectionProps } from '../models/index';
 
-interface IBottomSectionProps {
-  searchQuery: string;
-}
+const BASE_URL = 'https://swapi.dev/api/planets/';
 
-const BASE_URL = 'https://swapi.dev/api/vehicles/';
-
-export default class BottomSection extends Component<IBottomSectionProps> {
+export default class BottomSection extends Component<
+  IBottomSectionProps,
+  IBottomSectionState
+> {
   constructor(props: IBottomSectionProps) {
     super(props);
+    this.state = {
+      planets: null,
+      isLoading: false,
+      error: null,
+    };
   }
 
-  fetchData = async (searchQuery: string) => {
-    let url = BASE_URL;
+  fetchData = async (url: string) => {
+    this.setState({ isLoading: true });
 
-    if (searchQuery) {
-      url = BASE_URL + '?search=' + searchQuery;
-    }
     await fetch(url)
       .then((resp) => {
+        this.setState({
+          isLoading: false,
+        });
         if (!resp.ok) {
-          throw new Error(resp.statusText);
-          console.log('resp.statusText', resp.statusText);
+          throw new Error('Server responds with error!');
         }
-        const result = resp.json();
-        return result;
+        return resp.json();
       })
       .then((result) => {
-        console.log('result.data', result);
-
-        // this.setState((prevState) => {
-        //   return {
-        //     ...prevState,
-        //     searchResponse: result.data,
-        //   };
-        // });
+        this.setState({
+          planets: result.results,
+        });
       })
-      .catch((err) => console.error('err.message', err.message));
+      .catch((err) => {
+        this.setState({
+          error: err,
+          isLoading: false,
+        });
+      });
   };
+
+  componentDidMount() {
+    this.fetchData(BASE_URL);
+  }
 
   componentDidUpdate(prevProps: IBottomSectionProps) {
     // Обычное использование (не забудьте сравнить свойства):
-    if (this.props.searchQuery !== prevProps.searchQuery) {
-      this.fetchData(this.props.searchQuery);
+    if (
+      this.props.searchQuery !== prevProps.searchQuery &&
+      this.props.searchQuery
+    ) {
+      const url = BASE_URL + '?search=' + this.props.searchQuery;
+      this.fetchData(url);
     }
   }
 
   render() {
-    const list = result.map((item, index) => {
-      return <li key={index}>item</li>;
-    });
+    const { planets, error, isLoading } = this.state;
 
-    return <div>{list}</div>;
+    if (isLoading) {
+      return <h2>Loading...</h2>;
+    }
+
+    if (error) {
+      return <h2>Error: {error.message}</h2>;
+    }
+
+    if (planets && planets.length) {
+      return (
+        <div>
+          <PlanetList planets={planets} />
+        </div>
+      );
+    } else {
+      return <h2> Nothing found! </h2>;
+    }
+
+    // return (
+    //   <div>
+    //     Hello
+    //     <PlanetList planets={planets} />
+    //   </div>
+    // );
   }
 }

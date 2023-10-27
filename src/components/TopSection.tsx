@@ -1,25 +1,10 @@
 import React, { Component } from 'react';
 import BottomSection from './BottomSection';
+import { DefaultProps, ITopSectionState } from '../models/index';
 
-// interface IProps {
-//   searchQuery: string;
-//   searchResponse: string;
-//   searchError: string;
-
-//   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-//   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-// }
-
-interface IState {
-  value: string;
-  searchQuery: string;
-  searchError: string;
-}
-
-interface DefaultProps {}
 interface Props extends DefaultProps {}
 
-export default class TopSection extends Component<Props, IState> {
+export default class TopSection extends Component<Props, ITopSectionState> {
   public static readonly defaultProps = {};
 
   constructor(props: Props) {
@@ -32,7 +17,6 @@ export default class TopSection extends Component<Props, IState> {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    // this.fetchData = this.fetchData.bind(this);
   }
 
   handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -50,41 +34,6 @@ export default class TopSection extends Component<Props, IState> {
       searchQuery: this.state.value,
     }));
   };
-
-  // fetchData = async () => {
-  //   const url = BASE_URL + this.state.searchQuery;
-  //   await fetch(url)
-  //     .then((resp) => {
-  //       if (!resp.ok) {
-  //         throw new Error(resp.statusText);
-  //         console.log('resp.statusText', resp.statusText);
-  //       }
-  //       return resp.json();
-  //     })
-  //     .then((result) => {
-  //       console.log('result.data', result);
-
-  //       this.setState((prevState) => {
-  //         return {
-  //           ...prevState,
-  //           searchResponse: result.data,
-  //         };
-  //       });
-  //     })
-  //     .catch((err) => console.error('err.message', err.message));
-  // };
-
-  // async function fetchData({ query }): Promise<void> {
-  //   const results = await fetch("https://swapi.dev/api/planets/?page=1");
-  //   const data = await results.json();
-  //   console.log(data);
-  //   let count = data.count;
-  //   let next = data.next;
-  //   let previous = data.previous;
-  //   console.log(count);
-  //   console.log(next);
-  //   console.log(previous);
-  // }
 
   render() {
     return (
