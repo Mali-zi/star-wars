@@ -48,20 +48,18 @@ export default class BottomSection extends Component<
     const prevSearch = localStorage.getItem('search');
     if (prevSearch) {
       this.setState({ searchQuery: JSON.parse(prevSearch) });
-      console.log('prevSearch', JSON.parse(prevSearch));
-      const url = BASE_URL + '?search=' + JSON.parse(prevSearch);
+      const url =
+        BASE_URL + '?search=' + JSON.parse(prevSearch) + '&offset=0&limit=10';
       this.fetchData(url);
     } else {
-      this.fetchData(BASE_URL);
+      this.fetchData(BASE_URL + '&offset=0&limit=10');
     }
   }
 
   componentDidUpdate(prevProps: IBottomSectionProps) {
-    if (
-      this.props.searchQuery !== prevProps.searchQuery &&
-      this.props.searchQuery
-    ) {
-      const url = BASE_URL + '?search=' + this.props.searchQuery;
+    if (this.props.searchQuery !== prevProps.searchQuery) {
+      const url =
+        BASE_URL + '?search=' + this.props.searchQuery + '&offset=0&limit=10';
       this.fetchData(url);
     }
   }

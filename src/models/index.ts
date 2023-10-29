@@ -35,6 +35,7 @@ export interface IPlanetListProps {
 export interface ITopSectionState {
   value: string;
   searchQuery: string;
+  isValid: boolean;
 }
 
 export interface IPlanetProps {

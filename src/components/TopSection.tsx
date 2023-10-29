@@ -12,6 +12,7 @@ export default class TopSection extends Component<Props, ITopSectionState> {
     this.state = {
       value: '',
       searchQuery: '',
+      isValid: true,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -24,12 +25,19 @@ export default class TopSection extends Component<Props, ITopSectionState> {
 
   handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    localStorage.setItem('search', JSON.stringify(this.state.value));
-    this.setState((prevState) => ({
-      ...prevState,
-      searchQuery: this.state.value,
-    }));
-    console.log('searchQuery', this.state.searchQuery);
+    if (this.state.value.trim()) {
+      localStorage.setItem('search', JSON.stringify(this.state.value.trim()));
+      this.setState((prevState) => ({
+        ...prevState,
+        searchQuery: this.state.value,
+        isValid: true,
+      }));
+    } else {
+      this.setState((prevState) => ({
+        ...prevState,
+        isValid: false,
+      }));
+    }
   };
 
   componentDidMount() {
@@ -64,11 +72,16 @@ export default class TopSection extends Component<Props, ITopSectionState> {
                   <input
                     type="submit"
                     className="btn btn-primary ms-2 flex-shrink-1"
-                    value="Submit"
+                    value="Search"
                   />
                 </div>
               </label>
             </form>
+            {this.state.isValid ? (
+              <></>
+            ) : (
+              <p className="text-danger fs-5">The query isn&apos;t valid</p>
+            )}
           </div>
         </section>
         <hr />

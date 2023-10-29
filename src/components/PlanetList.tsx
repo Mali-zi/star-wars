@@ -10,6 +10,10 @@ export default class PlanetList extends Component<IPlanetListProps> {
       </li>
     ));
 
-    return <ul className="row row-cols-1 row-cols-md-4 g-4">{list}</ul>;
+    return (
+      <ul className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4">
+        {list}
+      </ul>
+    );
   }
 }
