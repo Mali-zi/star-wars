@@ -41,7 +41,7 @@ export default class TopSection extends Component<Props, ITopSectionState> {
 
   render() {
     return (
-      <></>
+      <>
         <section className="col-lg-6 col-md-12">
           <h2 className="planet-list-header">Planet List</h2>
           <div className="mb-3">
