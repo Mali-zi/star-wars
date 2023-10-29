@@ -57,7 +57,6 @@ export default class BottomSection extends Component<
   }
 
   componentDidUpdate(prevProps: IBottomSectionProps) {
-    // Обычное использование (не забудьте сравнить свойства):
     if (
       this.props.searchQuery !== prevProps.searchQuery &&
       this.props.searchQuery

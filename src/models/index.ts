@@ -36,3 +36,7 @@ export interface ITopSectionState {
   value: string;
   searchQuery: string;
 }
+
+export interface IPlanetProps {
+  planet: IPlanet;
+}

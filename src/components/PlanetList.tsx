@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { IPlanetListProps } from '../models/index';
+import Planet from './Planet';
 
 export default class PlanetList extends Component<IPlanetListProps> {
   render() {
     const list = this.props.planets.map((planet, index) => (
-      <li key={index}>{planet.name}</li>
+      <li key={index}>
+        <Planet planet={planet} />
+      </li>
     ));
 
-    return <ul>{list}</ul>;
+    return <ul className="row row-cols-1 row-cols-md-4 g-4">{list}</ul>;
   }
 }

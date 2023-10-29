@@ -27,36 +27,53 @@ export default class TopSection extends Component<Props, ITopSectionState> {
     localStorage.setItem('search', JSON.stringify(this.state.value));
     this.setState((prevState) => ({
       ...prevState,
-      value: '',
       searchQuery: this.state.value,
     }));
     console.log('searchQuery', this.state.searchQuery);
   };
 
+  componentDidMount() {
+    const prevSearch = localStorage.getItem('search');
+    if (prevSearch) {
+      this.setState({ value: JSON.parse(prevSearch) });
+    }
+  }
+
   render() {
     return (
-      <div>
-        <section>
-          <div>Search for a movie</div>
-          <div>
+      <>
+        <section className="col-lg-6 col-md-12">
+          <h2 className="planet-list-header">Planet List</h2>
+          <div className="mb-3">
             <form onSubmit={(e) => this.handleSubmit(e)}>
-              <label>
-                Enter a search query
-                <input
-                  type="text"
-                  placeholder="tt0103064"
-                  autoFocus
-                  value={this.state.value}
-                  onChange={this.handleChange}
-                />
+              <label
+                htmlFor="search-form"
+                className="form-label d-flex flex-column justify-content-start align-items-start fs-5"
+              >
+                Search by planet name
+                <div className="container-fluid d-flex p-0 align-items-stretch mt-2">
+                  <input
+                    id="search-form"
+                    type="text"
+                    className="form-control w-100 border-4 border-primary"
+                    placeholder="Enter a search query"
+                    autoFocus
+                    value={this.state.value}
+                    onChange={this.handleChange}
+                  />
+                  <input
+                    type="submit"
+                    className="btn btn-primary ms-2 flex-shrink-1"
+                    value="Submit"
+                  />
+                </div>
               </label>
-              <input type="submit" value="Search" />
             </form>
           </div>
         </section>
-
+        <hr />
         <BottomSection searchQuery={this.state.searchQuery} />
-      </div>
+      </>
     );
   }
 }

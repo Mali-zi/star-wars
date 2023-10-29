@@ -4,9 +4,15 @@ import ErrorBoundary from './components/ErrorBoundary';
 
 function App() {
   return (
-    <ErrorBoundary>
-      <TopSection />
-    </ErrorBoundary>
+    <div className="container-fluid">
+      <div className="row mt-4">
+        <div className="col m-4">
+          <ErrorBoundary>
+            <TopSection />
+          </ErrorBoundary>
+        </div>
+      </div>
+    </div>
   );
 }
 
